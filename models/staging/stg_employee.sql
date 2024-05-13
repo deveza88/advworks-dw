@@ -17,6 +17,6 @@ select
     p.suffix as suffix,
     p.rowguid as person_row_guid,
     p.modifieddate as person_last_update,
-    GREATEST(e.modifieddate, p.modifieddate) as last_update
+    greatest(e.modifieddate, p.modifieddate) as last_update
 from {{ source("humanresources", "employee") }} e
-    left join {{ source("person", "person") }} p on e.businessentityid = p.businessentityid
+left join {{ source("person", "person") }} p on e.businessentityid = p.businessentityid
