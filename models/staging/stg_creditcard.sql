@@ -1,6 +1,6 @@
 with source_data as (
     select
-        creditcardid
+        creditcardid as creditcard_id
         , cardtype
         , expyear
         , modifieddate

@@ -1,6 +1,6 @@
 with source_data as (
     select
-        addressid
+        addressid as address_id
         , stateprovinceid
         , city
         , addressline2

@@ -54,6 +54,7 @@ sources:
 
 
 
+
 models:
   - name: stg_employee
     columns:
@@ -63,12 +64,14 @@ models:
           - unique
           - not_null
 
+
   - name: stg_address
     columns:
-      - name: addressid
+      - name: address_id
         description: "A unique identifier for the address"
         tests:
           - not_null
+          - unique
 
   - name: stg_countryregion
     columns:
@@ -80,7 +83,7 @@ models:
 
   - name: stg_creditcard
     columns:
-      - name: creditcardid
+      - name: creditcard_id
         description: "A unique identifier for the creditcard"
         tests:
           - unique
