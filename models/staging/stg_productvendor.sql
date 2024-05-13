@@ -9,4 +9,4 @@ SELECT productid
     , onorderqty
     , unitmeasurecode
     , modifieddate
-from "advworks_famd"."purchasing"."productvendor"
+from {{ source("purchasing", "productvendor") }}
