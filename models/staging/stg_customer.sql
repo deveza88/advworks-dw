@@ -1,9 +1,9 @@
 with source_data as (
     select
-        customerid
-        , personid
-        , storeid
-        , territoryid
+        customerid as customer_id
+        , personid as person_id
+        , storeid as store_id
+        , territoryid as territory_id
     from {{ source('sales', 'customer') }}
 )
 select *

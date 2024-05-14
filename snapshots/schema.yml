@@ -18,3 +18,19 @@ snapshots:
       - name: dbt_updated_at
         description: "The timestamp of when this record was last updated"
 
+  - name: sp_person
+    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
+    columns:
+      - name: businessentity_id
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null
+
+  - name: sp_employee
+    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
+    columns:
+      - name: employee_id
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null
+

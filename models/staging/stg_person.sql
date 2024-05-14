@@ -1,16 +1,16 @@
 with source_data as (
     select
-        businessentityid
-        , title
-        , firstname
-        , middlename
-        , lastname
-        , persontype
-        , namestyle
-        , suffix
-        , modifieddate
-        , rowguid
-        , emailpromotion
+        businessentityid as businessentity_id,
+        title,
+        firstname,
+        middlename,
+        lastname,
+        persontype,
+        namestyle,
+        suffix,
+        modifieddate as last_update,
+        rowguid,
+        emailpromotion
     from {{ source('person', 'person') }}
 )
 select *

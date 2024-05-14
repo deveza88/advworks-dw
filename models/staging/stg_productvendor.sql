@@ -1,5 +1,5 @@
-SELECT productid
-    , businessentityid
+SELECT productid as product_id
+    , businessentityid as businessentity_id
     , averageleadtime
     , standardprice
     , lastreceiptcost

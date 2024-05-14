@@ -53,8 +53,6 @@ sources:
       - name: productvendor
 
 
-
-
 models:
   - name: stg_employee
     columns:
@@ -75,7 +73,7 @@ models:
 
   - name: stg_countryregion
     columns:
-      - name: countryregioncode
+      - name: country_id
         description: "A unique identifier for the country"
         tests:
           - unique
@@ -91,7 +89,19 @@ models:
 
   - name: stg_productvendor
     columns:
-      - name: productid
-        description: "A unique identifier for the productvendor"
+      - name: product_id
+        description: "A identifier for the product_id"
         tests:
           - not_null
+      - name: businessentity_id
+        description: "A unique identifier for the businessentity_id"
+        tests:
+          - not_null      
+
+  - name: stg_customer
+    columns:
+      - name: customer_id
+        description: "A identifier for the customer_id"
+        tests:
+          - not_null
+          - unique

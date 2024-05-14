@@ -3,7 +3,7 @@
 {{
     config(
         target_schema='snapshots',
-        unique_key='productid',
+        unique_key='product_id',
         strategy='timestamp',
         updated_at='modifieddate'
     )
