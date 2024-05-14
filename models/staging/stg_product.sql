@@ -8,7 +8,7 @@ with source_data as (
         , makeflag
         , productnumber as product_number
         , reorderpoint
-        , modifieddate
+        , modifieddate as last_update
         , rowguid
         , productmodelid
         , weightunitmeasurecode

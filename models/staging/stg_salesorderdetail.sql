@@ -1,11 +1,11 @@
 with source_data as (
     select
-        salesorderid
+        salesorderid as salesorder_id
         , orderqty
-        , salesorderdetailid
+        , salesorderdetailid as salesorderdetail_id
         , unitprice
         , specialofferid
-        , modifieddate
+        , modifieddate as last_update
         , rowguid
         , productid as product_id
         , unitpricediscount

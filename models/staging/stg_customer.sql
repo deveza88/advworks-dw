@@ -4,6 +4,7 @@ with source_data as (
         , personid as person_id
         , storeid as store_id
         , territoryid as territory_id
+        , CURRENT_TIMESTAMP as last_update
     from {{ source('sales', 'customer') }}
 )
 select *

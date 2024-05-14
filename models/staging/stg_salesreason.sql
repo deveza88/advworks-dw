@@ -3,7 +3,7 @@ with source_data as (
         salesreasonid as salesreason_id
         , name as reason_name
         , reasontype
-        , modifieddate
+        , modifieddate as last_update
     from {{ source('sales', 'salesreason') }}
 )
 select *

@@ -3,7 +3,7 @@ with source_data as (
         salesorderid as salesorder_id 
         , shipmethodid 
         , billtoaddressid as bill_address_id
-        , modifieddate
+        , modifieddate as last_update
         , rowguid
         , taxamt
         , shiptoaddressid as ship_address_id
@@ -13,13 +13,13 @@ with source_data as (
         , orderdate
         , creditcardapprovalcode
         , subtotal
-        , creditcardid
+        , creditcardid as creditcard_id
         , currencyrateid
         , revisionnumber
         , freight
         , duedate
         , totaldue
-        , customerid
+        , customerid as customer_id
         , salespersonid
         , shipdate
         , accountnumber

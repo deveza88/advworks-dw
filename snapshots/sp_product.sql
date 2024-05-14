@@ -1,4 +1,4 @@
-{% snapshot sp_productvendor %}
+{% snapshot sp_product %}
 
 {{
     config(
@@ -11,6 +11,6 @@
 
 select
     *
-from {{ ref('stg_productvendor') }}
+from {{ ref('stg_product') }}
 
 {% endsnapshot %}

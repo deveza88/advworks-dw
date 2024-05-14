@@ -8,5 +8,5 @@ SELECT productid as product_id
     , maxorderqty
     , onorderqty
     , unitmeasurecode
-    , modifieddate
+    , modifieddate as last_update
 from {{ source("purchasing", "productvendor") }}

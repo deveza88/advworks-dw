@@ -1,9 +1,9 @@
-{% snapshot sp_productvendor %}
+{% snapshot sp_store %}
 
 {{
     config(
         target_schema='snapshots',
-        unique_key='product_id',
+        unique_key='businessentity_id',
         strategy='timestamp',
         updated_at='last_update'
     )
@@ -11,6 +11,6 @@
 
 select
     *
-from {{ ref('stg_productvendor') }}
+from {{ ref('stg_store') }}
 
 {% endsnapshot %}

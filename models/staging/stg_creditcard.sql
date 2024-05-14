@@ -3,7 +3,7 @@ with source_data as (
         creditcardid as creditcard_id
         , cardtype
         , expyear
-        , modifieddate
+        , modifieddate as last_update
         , expmonth
         , cardnumber
     from {{ source('sales', 'creditcard') }}

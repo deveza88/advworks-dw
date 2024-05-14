@@ -4,7 +4,7 @@ with source_data as (
         , stateprovinceid as stateprovince_id
         , city
         , addressline2
-        , modifieddate
+        , modifieddate as last_update
         , rowguid
         , postalcode
         , spatiallocation

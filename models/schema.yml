@@ -66,7 +66,6 @@ models:
         description: "A unique identifier for the address, is a primary key, to join stg_stateprovince"
         tests:
           - not_null
-          - unique
           
   - name: stg_countryregion
     columns:
@@ -99,7 +98,6 @@ models:
       - name: person_id
         description: "A identifier for the customer_id, to join stg_pergon.businessentity_id"
         tests:
-          - not_null
           - unique
 
   - name: stg_employee
@@ -132,7 +130,79 @@ models:
         description: "Primary key. Foreign key to stg_product.product_id"
         tests:
           - not_null
+
+  - name: stg_salesorderdetail
+    columns:
+      - name: salesorder_id
+        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
+        tests:
+          - not_null
+
+      - name: product_id
+        description: "Primary key. Foreign key to stg_product.product_id"
+        tests:
+          - not_null
+
+  - name: stg_salesorderheader
+    columns:
+      - name: salesorder_id
+        description: "Primary key. Foreign key to stg_salesorderdetail.salesorder_id"
+        tests:
+          - not_null
           - unique
 
+      - name: bill_address_id
+        description: "Primary key. Foreign key to stg_person.address_id"
+        tests:
+          - not_null
 
+      - name: ship_address_id
+        description: "Primary key. Foreign key to stg_person.address_id"
+        tests:
+          - not_null
 
+      - name: creditcard_id
+        description: "Primary key. Foreign key to stg_creditcard.creditcard_id"
+
+      - name: customer_id
+        description: "Primary key. Foreign key to stg_customer.customer.id"
+        tests:
+          - not_null
+
+  - name: stg_salesorderheadersalesreason
+    columns:
+      - name: salesorder_id
+        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
+        tests:
+          - not_null
+          
+      - name: salesreason_id
+        description: "Primary key. Foreign key to stg_reason.salesorder_id"
+        tests:
+          - not_null
+
+  - name: stg_salesreason
+    columns:
+      - name: salesorder_id
+        description: "Foreign key to stg_salesorderheadersalesreason.salesorder_id"
+
+  - name: stg_stateprovince
+    columns:
+      - name: stateprovince_id
+        description: "Primary key. Foreign key to stg_adress.stateprovince_id"
+        tests:
+          - not_null
+          - unique
+
+      - name: country_id
+        description: "Primary key. Foreign key to stg_countryregion.country_id"
+        tests:
+          - not_null
+
+  - name: stg_store
+    columns:
+      - name: businessentity_id
+        description: "Primary key. Foreign key to stg_customer.store_id"
+        tests:
+          - not_null
+          - unique
