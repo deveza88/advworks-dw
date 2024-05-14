@@ -7,7 +7,7 @@ with source_data as (
         , specialofferid
         , modifieddate
         , rowguid
-        , productid
+        , productid as product_id
         , unitpricediscount
     from {{ source('sales', 'salesorderdetail') }}
 )

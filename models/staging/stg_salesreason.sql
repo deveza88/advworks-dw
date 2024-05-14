@@ -1,6 +1,6 @@
 with source_data as (
     select
-        salesreasonid
+        salesreasonid as salesreason_id
         , name as reason_name
         , reasontype
         , modifieddate

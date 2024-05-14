@@ -1,7 +1,7 @@
 with source_data as (
     select
         addressid as address_id
-        , stateprovinceid
+        , stateprovinceid as stateprovince_id
         , city
         , addressline2
         , modifieddate

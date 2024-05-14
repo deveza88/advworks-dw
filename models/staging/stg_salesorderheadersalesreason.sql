@@ -1,6 +1,6 @@
 with source_data as (
     select
-        salesorderid
+        salesorderid as salesorder_id 
         , modifieddate
         , salesreasonid
     from {{ source('sales', 'salesorderheadersalesreason') }}

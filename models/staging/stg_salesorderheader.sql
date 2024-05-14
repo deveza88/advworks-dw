@@ -1,12 +1,12 @@
 with source_data as (
     select
-        salesorderid
-        , shipmethodid
-        , billtoaddressid
+        salesorderid as salesorder_id 
+        , shipmethodid 
+        , billtoaddressid as bill_address_id
         , modifieddate
         , rowguid
         , taxamt
-        , shiptoaddressid
+        , shiptoaddressid as ship_address_id
         , onlineorderflag
         , territoryid
         , status as order_status

@@ -1,7 +1,7 @@
 with source_data as (
     select
-        stateprovinceid
-        , countryregioncode
+        stateprovinceid as stateprovince_id
+        , countryregioncode as country_id
         , modifieddate
         , rowguid
         , name as state_name

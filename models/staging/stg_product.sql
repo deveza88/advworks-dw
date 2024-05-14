@@ -1,12 +1,12 @@
 with source_data as (
     select
-        productid
+        productid as product_id
         , name as product_name
         , safetystocklevel
         , finishedgoodsflag
         , class
         , makeflag
-        , productnumber
+        , productnumber as product_number
         , reorderpoint
         , modifieddate
         , rowguid
