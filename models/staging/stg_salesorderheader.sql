@@ -10,7 +10,7 @@ with source_data as (
         , onlineorderflag
         , territoryid
         , status as order_status
-        , orderdate
+        , orderdate as order_date
         , creditcardapprovalcode
         , subtotal
         , creditcardid as creditcard_id
