@@ -1,36 +1,151 @@
 version: 2
 
 snapshots:
-  - name: sp_employee
-    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
+  - name: sp_address
     columns:
-      - name: dbt_scd_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
+      - name: address_id
+        description: "A unique identifier for the address, is a primary key, to join stg_salesorderheader, bill_address_id and ship_address_id"
+        tests:
+          - not_null
+          - unique
+      - name: stateprovince_id
+        description: "A unique identifier for the address, is a primary key, to join stg_stateprovince"
+        tests:
+          - not_null
+          
+  - name: sp_countryregion
+    columns:
+      - name: country_id
+        description: "ISO standard code for countries and regions, is a primary key, to join stg_stateprovince"
         tests:
           - unique
           - not_null
-      - name: dbt_valid_from
-        description: "This record is valid from this timestamp until the timestamp in dbt_valid_to"
+      - name: country_name
+        description: "Country or region name, is a key"
         tests:
+          - unique
           - not_null
-      - name: dbt_valid_to
-        description: "This record is valid from the timestamp in dbt_valid_from until this timestamp. If this is NULL, it means this record is the currently valid version"
-      - name: dbt_updated_at
-        description: "The timestamp of when this record was last updated"
 
-  - name: sp_person
-    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
+  - name: sp_creditcard
     columns:
-      - name: businessentity_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
+      - name: creditcard_id
+        description: "A unique identifier for the creditcard_id, to join stg_salesorderheader"
+        tests:
+          - unique
+          - not_null
+
+  - name: sp_customer
+    columns:
+      - name: customer_id
+        description: "A identifier for the customer_id, to join stg_salesorderheader.customer_id"
         tests:
           - not_null
+          - unique
+      - name: person_id
+        description: "A identifier for the customer_id, to join stg_pergon.businessentity_id"
+        tests:
+          - unique
 
   - name: sp_employee
-    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
     columns:
       - name: employee_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
+        description: "A unique identifier for the employee, to join stg_person.businessentity_id"
+        tests:
+          - unique
+          - not_null
+
+  - name: sp_person
+    columns:
+      - name: businessentity_id
+        description: "A identifier for the employee, to join stg_employee.businessentity_id or stg_customer.person_id"
+
+  - name: sp_product
+    columns:
+      - name: product_id
+        description: "A identifier for the pkey, to join stg_salesorderdetails.product_id"
+        tests:
+          - not_null
+          - unique
+
+  - name: sp_productvendor
+    columns:
+      - name: product_id
+        description: "Primary key. Foreign key to stg_product.product_id"
         tests:
           - not_null
 
+  - name: sp_salesorderdetail
+    columns:
+      - name: salesorder_id
+        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
+        tests:
+          - not_null
+
+      - name: product_id
+        description: "Primary key. Foreign key to stg_product.product_id"
+        tests:
+          - not_null
+
+  - name: sp_salesorderheader
+    columns:
+      - name: salesorder_id
+        description: "Primary key. Foreign key to stg_salesorderdetail.salesorder_id"
+        tests:
+          - not_null
+          - unique
+
+      - name: bill_address_id
+        description: "Primary key. Foreign key to stg_person.address_id"
+        tests:
+          - not_null
+
+      - name: ship_address_id
+        description: "Primary key. Foreign key to stg_person.address_id"
+        tests:
+          - not_null
+
+      - name: creditcard_id
+        description: "Primary key. Foreign key to stg_creditcard.creditcard_id"
+
+      - name: customer_id
+        description: "Primary key. Foreign key to stg_customer.customer.id"
+        tests:
+          - not_null
+
+  - name: sp_salesorderheadersalesreason
+    columns:
+      - name: salesorder_id
+        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
+        tests:
+          - not_null
+          
+      - name: salesreason_id
+        description: "Primary key. Foreign key to stg_reason.salesorder_id"
+        tests:
+          - not_null
+
+  - name: sp_salesreason
+    columns:
+      - name: salesorder_id
+        description: "Foreign key to stg_salesorderheadersalesreason.salesorder_id"
+
+  - name: sp_stateprovince
+    columns:
+      - name: stateprovince_id
+        description: "Primary key. Foreign key to stg_adress.stateprovince_id"
+        tests:
+          - not_null
+          - unique
+
+      - name: country_id
+        description: "Primary key. Foreign key to stg_countryregion.country_id"
+        tests:
+          - not_null
+
+  - name: sp_store
+    columns:
+      - name: businessentity_id
+        description: "Primary key. Foreign key to stg_customer.store_id"
+        tests:
+          - not_null
+          - unique

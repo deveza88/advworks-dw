@@ -11,7 +11,6 @@ sources:
       - name: employeepayhistory
       - name: jobcandidate
 
-
   - name: person
     schema: person
     tables:
@@ -45,7 +44,6 @@ sources:
       - name: salesreason
       - name: stateprovince
       - name: store
-
 
   - name: purchasing
     schema: purchasing
@@ -111,7 +109,10 @@ models:
   - name: stg_person
     columns:
       - name: businessentity_id
-        description: "A unique identifier for the employee, to join stg_employee.businessentity_id or stg_customer.person_id"
+        description: "A identifier for the employee, to join stg_employee.businessentity_id or stg_customer.person_id"
+        tests:
+          - not_null
+          - unique
 
   - name: stg_product
     columns:
