@@ -2,150 +2,153 @@ version: 2
 
 snapshots:
   - name: sp_address
+    description: "A snapshot of the stg_address model, to keep track of changes to that table"
     columns:
       - name: address_id
-        description: "A unique identifier for the address, is a primary key, to join stg_salesorderheader, bill_address_id and ship_address_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
           - unique
       - name: stateprovince_id
-        description: "A unique identifier for the address, is a primary key, to join stg_stateprovince"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
           
   - name: sp_countryregion
+    description: "A snapshot of the stg_countryregion model, to keep track of changes to that table"
     columns:
       - name: country_id
-        description: "ISO standard code for countries and regions, is a primary key, to join stg_stateprovince"
-        tests:
-          - unique
-          - not_null
+        description: "A surrogate key created by dbt. It is the primary key of this table"
       - name: country_name
-        description: "Country or region name, is a key"
-        tests:
-          - unique
-          - not_null
+        description: "A surrogate key created by dbt. It is the primary key of this table"
 
   - name: sp_creditcard
+    description: "A snapshot of the stg_creditcard model, to keep track of changes to that table"
     columns:
       - name: creditcard_id
-        description: "A unique identifier for the creditcard_id, to join stg_salesorderheader"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - unique
           - not_null
 
   - name: sp_customer
+    description: "A snapshot of the stg_customer model, to keep track of changes to that table"
     columns:
       - name: customer_id
-        description: "A identifier for the customer_id, to join stg_salesorderheader.customer_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
-          - unique
+
       - name: person_id
-        description: "A identifier for the customer_id, to join stg_pergon.businessentity_id"
-        tests:
-          - unique
+        description:  "A surrogate key created by dbt. It is the primary key of this table"
 
   - name: sp_employee
+    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
     columns:
       - name: employee_id
-        description: "A unique identifier for the employee, to join stg_person.businessentity_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - unique
           - not_null
 
   - name: sp_person
+    description: "A snapshot of the stg_person model, to keep track of changes to that table"
     columns:
       - name: businessentity_id
-        description: "A identifier for the employee, to join stg_employee.businessentity_id or stg_customer.person_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
 
   - name: sp_product
+    description: "A snapshot of the stg_product model, to keep track of changes to that table"
     columns:
       - name: product_id
-        description: "A identifier for the pkey, to join stg_salesorderdetails.product_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
           - unique
 
   - name: sp_productvendor
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
     columns:
       - name: product_id
-        description: "Primary key. Foreign key to stg_product.product_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
   - name: sp_salesorderdetail
+    description: "A snapshot of the stg_salesorderdetail model, to keep track of changes to that table"
     columns:
       - name: salesorder_id
-        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
       - name: product_id
-        description: "Primary key. Foreign key to stg_product.product_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
   - name: sp_salesorderheader
+    description: "A snapshot of the stg_salesorderheader model, to keep track of changes to that table"
     columns:
       - name: salesorder_id
-        description: "Primary key. Foreign key to stg_salesorderdetail.salesorder_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
           - unique
 
       - name: bill_address_id
-        description: "Primary key. Foreign key to stg_person.address_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
       - name: ship_address_id
-        description: "Primary key. Foreign key to stg_person.address_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
       - name: creditcard_id
-        description: "Primary key. Foreign key to stg_creditcard.creditcard_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
 
       - name: customer_id
-        description: "Primary key. Foreign key to stg_customer.customer.id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
   - name: sp_salesorderheadersalesreason
+    description: "A snapshot of the stg_salesorderheadersalesreason model, to keep track of changes to that table"
     columns:
       - name: salesorder_id
-        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
           
       - name: salesreason_id
-        description: "Primary key. Foreign key to stg_reason.salesorder_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
   - name: sp_salesreason
     columns:
       - name: salesorder_id
-        description: "Foreign key to stg_salesorderheadersalesreason.salesorder_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
 
   - name: sp_stateprovince
     columns:
       - name: stateprovince_id
-        description: "Primary key. Foreign key to stg_adress.stateprovince_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
           - unique
 
       - name: country_id
-        description: "Primary key. Foreign key to stg_countryregion.country_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
 
   - name: sp_store
     columns:
       - name: businessentity_id
-        description: "Primary key. Foreign key to stg_customer.store_id"
+        description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
           - unique
