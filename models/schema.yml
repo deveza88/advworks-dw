@@ -109,7 +109,7 @@ models:
   - name: stg_person
     columns:
       - name: businessentity_id
-        description: "A identifier for the employee, to join stg_employee.businessentity_id or stg_customer.person_id"
+        description: "A identifier for the employee, to join stg_employee.businessentity_id || or || stg_customer.person_id"
         tests:
           - not_null
           - unique
@@ -183,7 +183,7 @@ models:
     columns:
       - name: salesorder_id
         description: "Foreign key to stg_salesorderheadersalesreason.salesorder_id"
-
+ 
   - name: stg_stateprovince
     columns:
       - name: stateprovince_id
