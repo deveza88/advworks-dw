@@ -15,9 +15,9 @@ with customer_base as (
 
 -- Final select statement
 select
-    cb.customer_id,
-    cb.person_id,
-    cb.stateprovince_id,
-    cb.country_id,
-    cb.store_id
+    customer_id,
+    person_id,
+    stateprovince_id,
+    country_id,
+    store_id
 from customer_base cb

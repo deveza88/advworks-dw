@@ -204,3 +204,18 @@ models:
         tests:
           - not_null
           - unique
+
+  - name: fact_products
+    columns:
+      - name: businessentity_id
+        description: "Foreign key"
+        tests:
+          - not_null
+      - name: storename
+        description: "oreign key"
+        tests:
+          - not_null
+      - name: store_id
+        description: "Foreign key"
+        tests:
+          - not_null
