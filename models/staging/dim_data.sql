@@ -1,4 +1,4 @@
-with date_sequence as (
+with dim_data as (
     select
         generate_series(
             (select min(order_date) from {{ ref('stg_salesorderheader') }}),
@@ -21,4 +21,4 @@ select
         when extract(isodow from date) in (6,7) then 'Weekend'
         else 'Weekday'
     end as day_type
-from date_sequence
+from dim_data

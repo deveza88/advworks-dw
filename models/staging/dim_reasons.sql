@@ -1,4 +1,4 @@
-with source_data as (
+with dim_reasons as (
     select
         sh.salesorder_id,
         sr.salesreason_id,
@@ -15,5 +15,5 @@ select
     reason_name,
     reasontype,
     last_update
-from source_data
+from dim_reasons
 where salesorder_id is not null

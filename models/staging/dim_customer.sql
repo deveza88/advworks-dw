@@ -1,5 +1,5 @@
 -- Joining stg_customer, stg_person, stg_address, and other relevant tables
-with customer_base as (
+with dim_customer as (
     select
         c.customer_id,
         p.businessentity_id as person_id,
@@ -18,6 +18,5 @@ select
     customer_id,
     person_id,
     stateprovince_id,
-    country_id,
-    store_id
-from customer_base cb
+    country_id
+from dim_customer cb
