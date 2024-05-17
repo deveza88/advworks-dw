@@ -207,15 +207,23 @@ models:
 
   - name: fact_products
     columns:
-      - name: businessentity_id
-        description: "Foreign key"
+      - name: sk_product
+        description: "Surrogate key"
         tests:
           - not_null
-      - name: storename
-        description: "oreign key"
+      - name: sk_order_sale
+        description: "Surrogate key"
         tests:
           - not_null
-      - name: store_id
-        description: "Foreign key"
+      - name: sk_id_customer
+        description: "Surrogate key"
+        tests:
+          - not_null
+      - name: sk_ship_to_customer_id
+        description: "Surrogate key"
+        tests:
+          - not_null
+      - name: sk_address_of_customer_id
+        description: "Surrogate key"
         tests:
           - not_null

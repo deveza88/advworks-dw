@@ -1,5 +1,6 @@
-WITH dim_prod AS (
-    SELECT 
+with
+dim_prod as (
+    select
         product_id,
         salesorderdetail_id,
         salesorder_id,
@@ -14,58 +15,57 @@ WITH dim_prod AS (
         sell_start,
         orderqty,
         unitprice
-    FROM {{ ref('dim_products') }}
+    from {{ ref("dim_products") }}
 ),
-dim_sales AS (
-    SELECT
+
+dim_sales as (
+    select
         salesorder_id,
         customer_id,
         ship_address_id,
         bill_address_id
-    FROM {{ ref('dim_sales') }}
-),
-dim_customer AS (
-    SELECT
-        customer_id,
-        person_id
-    FROM {{ ref('dim_customer') }}
-),
-dim_reason AS (
-    SELECT
-        salesorder_id,
-        reason_name
-    FROM {{ ref('dim_reasons') }}
+    from {{ ref("dim_sales") }}
 ),
 
-surrogate_keys AS (
-    SELECT
-        ROW_NUMBER() OVER () AS fact_id,
-        dp.product_id AS sk_product,
-        ds.salesorder_id AS sk_order_sale,
-        dc.customer_id AS sk_id_customer,
-        ds.ship_address_id AS sk_ship_to_customer_id,
-        ds.bill_address_id AS sk_address_of_customer_id,
+dim_customer as (select
+    customer_id,
+    person_id
+from {{ ref("dim_customer") }}),
+
+dim_reason as (select
+    salesorder_id,
+    reason_name
+from {{ ref("dim_reasons") }}),
+
+surrogate_keys as (
+    select
+        dp.product_id as sk_product,
+        ds.salesorder_id as sk_order_sale,
+        dc.customer_id as sk_id_customer,
+        ds.ship_address_id as sk_ship_to_customer_id,
+        ds.bill_address_id as sk_address_of_customer_id,
         dp.salesorderdetail_id,
-        dp.product_name AS product_name,
+        dp.product_name,
         dp.finishedgoodsflag,
-        dp.product_number AS product_number,
-        dp.standardcost AS cost_product,
-        dp.listprice AS sell_price,
-        dp.profit AS profit,
+        dp.product_number,
+        dp.standardcost as cost_product,
+        dp.listprice as sell_price,
+        dp.profit,
         dp.daystomanufacture,
         dp.color,
-        dp.sell_start AS data_sell_start,
-        dp.orderqty AS qty_order,
+        dp.sell_start as data_sell_start,
+        dp.orderqty as qty_order,
         dp.unitprice,
-        dr.reason_name AS delivery_reason
-    FROM dim_prod dp
-    JOIN dim_sales ds ON dp.salesorder_id = ds.salesorder_id
-    JOIN dim_customer dc ON ds.customer_id = dc.customer_id
-    LEFT JOIN dim_reason dr ON ds.salesorder_id = dr.salesorder_id
+        dr.reason_name as reason_buy,
+        row_number() over () as fact_id
+    from dim_prod as dp
+    inner join dim_sales as ds on dp.salesorder_id = ds.salesorder_id
+    inner join dim_customer as dc on ds.customer_id = dc.customer_id
+    left join dim_reason as dr on ds.salesorder_id = dr.salesorder_id
 ),
 
-final AS (
-    SELECT
+final as (
+    select
         sk_product,
         sk_order_sale,
         sk_id_customer,
@@ -79,11 +79,13 @@ final AS (
         daystomanufacture,
         data_sell_start,
         qty_order,
-        delivery_reason
-    FROM surrogate_keys
+        reason_buy
+    from surrogate_keys
 )
-SELECT
-    *
-FROM final
 
---miss emplooyee and store
+select *
+from
+    final
+
+    -- miss emplooyee and store
+    -- reason to buy maybe dont have nulls
