@@ -85,3 +85,5 @@ final AS (
 SELECT
     *
 FROM final
+
+--miss emplooyee and store
