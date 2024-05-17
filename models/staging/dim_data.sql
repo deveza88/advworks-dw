@@ -18,7 +18,7 @@ select
     to_char(date, 'YYYY-Q') as quarter_string,
     to_char(date, 'YYYY') || '-' || to_char(date, 'IW') as week_string,
     case
-        when extract(isodow from date) in (6,7) then 'Weekend'
+        when extract(isodow from date) in (6, 7) then 'Weekend'
         else 'Weekday'
     end as day_type
 from dim_data

@@ -5,12 +5,12 @@ with dim_customer as (
         p.businessentity_id as person_id,
         a.stateprovince_id,
         sp.country_id,
-        s.customer_id as store_id
-    from {{ ref('stg_customer') }} c
-    left join {{ ref('stg_person') }} p on c.person_id = p.businessentity_id
-    left join {{ ref('stg_salesorderheader') }} s on c.customer_id = s.customer_id
-    left join {{ ref('stg_address') }} a on s.bill_address_id = a.address_id
-    left join {{ ref('stg_stateprovince') }} sp on a.stateprovince_id = sp.stateprovince_id
+        c.store_id as store_id
+    from {{ ref('stg_customer') }} as c
+    left join {{ ref('stg_person') }} as p on c.person_id = p.businessentity_id
+    left join {{ ref('stg_salesorderheader') }} as s on c.customer_id = s.customer_id
+    left join {{ ref('stg_address') }} as a on s.bill_address_id = a.address_id
+    left join {{ ref('stg_stateprovince') }} as sp on a.stateprovince_id = sp.stateprovince_id
 )
 
 -- Final select statement
@@ -18,5 +18,6 @@ select
     customer_id,
     person_id,
     stateprovince_id,
-    country_id
-from dim_customer cb
+    country_id,
+    store_id
+from dim_customer

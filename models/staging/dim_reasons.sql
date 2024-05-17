@@ -11,9 +11,6 @@ with dim_reasons as (
 
 select
     salesorder_id,
-    salesreason_id,
     reason_name,
-    reasontype,
-    last_update
+    reasontype
 from dim_reasons
-where salesorder_id is not null
