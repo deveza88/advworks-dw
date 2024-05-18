@@ -152,3 +152,13 @@ snapshots:
         tests:
           - not_null
           - unique
+
+  - name: sp_purchasing
+    columns:
+      - name: purchaseorder_id
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null
+
+
+          

@@ -49,6 +49,11 @@ sources:
     schema: purchasing
     tables:
       - name: productvendor
+      - name: purchasing
+      - name: purchaseorderdetail
+      - name: purchaseorderheader
+      - name: shipmethod
+      - name: vendor
 
 models:
   - name: stg_address
@@ -111,6 +116,13 @@ models:
         tests:
           - not_null
           - unique
+
+  - name: stg_purchasing
+    columns:
+      - name: purchaseorder_id
+        tests:
+          - not_null
+
 
   - name: stg_product
     columns:
