@@ -5,7 +5,7 @@
         target_schema='snapshots',
         unique_key='purchaseorder_id',
         strategy='timestamp',
-        updated_at='duedate'
+        updated_at='due_date'
     )
 }}
 

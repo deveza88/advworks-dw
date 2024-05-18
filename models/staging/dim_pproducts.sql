@@ -6,7 +6,7 @@ WITH dim_products AS (
     FROM 
         {{ ref('stg_purchaseorderdetail') }} pu
     LEFT JOIN 
-        {{ ref('stg_product') }} pr ON pu.productid = pr.productid
+        {{ ref('stg_pproduct') }} pr ON pu.productid = pr.productid
 )
 
 SELECT 

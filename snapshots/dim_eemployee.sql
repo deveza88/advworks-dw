@@ -1,4 +1,4 @@
-{% snapshot sp_employee %}
+{% snapshot sp_dim_eemployee %}
 
 {{
     config(
@@ -11,6 +11,6 @@
 
 select
     *
-from {{ ref('stg_employee') }}
+from {{ ref('dim_eemployee') }}
 
 {% endsnapshot %}

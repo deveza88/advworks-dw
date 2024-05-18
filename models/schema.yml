@@ -1,65 +1,31 @@
 version: 2
 
 sources:
-  - name: humanresources
-    schema: humanresources
-    tables:
-      - name: employee
-      - name: department
-      - name: shift
-      - name: employeedepartmenthistory
-      - name: employeepayhistory
-      - name: jobcandidate
-
   - name: person
     schema: person
     tables:
       - name: person
-      - name: address
-      - name: addresstype
-      - name: businessentity
-      - name: businessentityaddress
-      - name: businessentitycontact
-      - name: contacttype
-      - name: emailaddress
-      - name: password
-      - name: personphone
-      - name: phonenumbertype
-      - name: stateprovince
-      - name: countryregion
 
   - name: production
     schema: production
     tables:
       - name: product
 
-  - name: sales
-    schema: sales
-    tables:
-      - name: creditcard
-      - name: customer
-      - name: salesorderdetail
-      - name: salesorderheader
-      - name: salesorderheadersalesreason
-      - name: salesreason
-      - name: stateprovince
-      - name: store
 
   - name: purchasing
     schema: purchasing
     tables:
       - name: productvendor
-      - name: purchasing
       - name: purchaseorderdetail
       - name: purchaseorderheader
       - name: shipmethod
       - name: vendor
 
 models:
-  - name: stg_employee
+  - name: stg_person
     columns:
       - name: employee_id
-        description: "A unique identifier for the employee, to join stg_person.businessentity_id"
+        description: "A unique identifier for the employee"
         tests:
           - unique
           - not_null
