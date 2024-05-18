@@ -2,7 +2,8 @@ WITH dim_products AS (
     SELECT
         pu.purchaseorderid,
         pu.productid,
-        pr.name
+        pr.name,
+        pu.modifieddate
     FROM 
         {{ ref('stg_purchaseorderdetail') }} pu
     LEFT JOIN 
@@ -12,6 +13,7 @@ WITH dim_products AS (
 SELECT 
     purchaseorderid,
     productid,
-    name
+    name,
+    modifieddate
 FROM dim_products
 ORDER BY purchaseorderid

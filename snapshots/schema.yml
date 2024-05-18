@@ -1,7 +1,17 @@
 version: 2
 
 snapshots:
-  - name: sp_employee
+
+  - name: sp_data
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
+    columns:
+    - name: date
+      description: "A surrogate key created by dbt. It is the primary key of this table"
+      tests:
+        - not_null
+
+
+  - name: sp_eemployee
     description: "A snapshot of the stg_employee model, to keep track of changes to that table"
     columns:
       - name: employee_id
@@ -10,14 +20,19 @@ snapshots:
           - unique
           - not_null
 
-  - name: sp_product
-    description: "A snapshot of the stg_product model, to keep track of changes to that table"
+  - name: sp_dim_header
+    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
     columns:
-      - name: product_id
+      - name: purchaseorderid
         description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
-          - unique
+
+  - name: sp_pproduct
+    description: "A snapshot of the stg_product model, to keep track of changes to that table"
+    columns:
+      - name: purchaseorderid
+        description: "A surrogate key created by dbt. It is the primary key of this table"
 
   - name: sp_productvendor
     description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
@@ -35,4 +50,18 @@ snapshots:
         tests:
           - not_null
 
-          
+  - name: sp_pperson
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
+    columns:
+      - name: employee_id
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null
+
+  - name: sp_dim_pproducts
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
+    columns:
+      - name: purchaseorderid
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null

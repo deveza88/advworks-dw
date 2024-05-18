@@ -22,7 +22,7 @@ sources:
       - name: vendor
 
 models:
-  - name: stg_person
+  - name: stg_pperson
     columns:
       - name: employee_id
         description: "A unique identifier for the employee"
@@ -30,7 +30,7 @@ models:
           - unique
           - not_null
 
-  - name: stg_product
+  - name: stg_pproduct
     columns:
       - name: product_id
         description: "A identifier for the pkey, to join stg_salesorderdetails.product_id"
@@ -69,6 +69,34 @@ models:
   - name: dim_header
     columns:
       - name: purchaseorderid
+        description: "Surrogate key"
+        tests:
+          - not_null
+
+  - name: dim_data
+    columns:
+      - name: date
+        description: "Surrogate key"
+        tests:
+          - not_null
+
+  - name: dim_eemployee
+    columns:
+      - name: employee_id
+        description: "Surrogate key"
+        tests:
+          - not_null
+
+  - name: dim_pproducts
+    columns:
+      - name: purchaseorderid
+        description: "Surrogate key"
+        tests:
+          - not_null
+
+  - name: fact_pmanagement
+    columns:
+      - name: sk_purchaseorder_id
         description: "Surrogate key"
         tests:
           - not_null
