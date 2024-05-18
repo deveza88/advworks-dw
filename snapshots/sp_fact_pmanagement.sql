@@ -1,16 +1,16 @@
-{% snapshot sp_purchasing %}
+{% snapshot sp_fact_pmanagement %}
 
 {{
     config(
         target_schema='snapshots',
         unique_key='purchaseorder_id',
         strategy='timestamp',
-        updated_at='last_update'
+        updated_at='duedate'
     )
 }}
 
 select
     *
-from {{ ref('stg_purchasing') }}
+from {{ ref('fact_pmanagement') }}
 
 {% endsnapshot %}

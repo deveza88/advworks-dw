@@ -1,12 +1,12 @@
 with source_data as (
     select
-        productid as product_id
-        , name as product_name
+        productid
+        , name
         , safetystocklevel
         , finishedgoodsflag
         , class
         , makeflag
-        , productnumber as product_number
+        , productnumber
         , reorderpoint
         , modifieddate as last_update
         , rowguid
@@ -19,7 +19,7 @@ with source_data as (
         , productline
         , color
         , sellstartdate
-        , weight as product_weight
+        , weight
     from {{ source('production', 'product') }}
 )
 select *

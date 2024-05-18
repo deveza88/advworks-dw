@@ -56,51 +56,6 @@ sources:
       - name: vendor
 
 models:
-  - name: stg_address
-    columns:
-      - name: address_id
-        description: "A unique identifier for the address, is a primary key, to join stg_salesorderheader, bill_address_id and ship_address_id"
-        tests:
-          - not_null
-          - unique
-      - name: stateprovince_id
-        description: "A unique identifier for the address, is a primary key, to join stg_stateprovince"
-        tests:
-          - not_null
-
-  - name: stg_countryregion
-    columns:
-      - name: country_id
-        description: "ISO standard code for countries and regions, is a primary key, to join stg_stateprovince"
-        tests:
-          - unique
-          - not_null
-      - name: country_name
-        description: "Country or region name, is a key"
-        tests:
-          - unique
-          - not_null
-
-  - name: stg_creditcard
-    columns:
-      - name: creditcard_id
-        description: "A unique identifier for the creditcard_id, to join stg_salesorderheader"
-        tests:
-          - unique
-          - not_null
-
-  - name: stg_customer
-    columns:
-      - name: customer_id
-        description: "A identifier for the customer_id, to join stg_salesorderheader.customer_id"
-        tests:
-          - not_null
-          - unique
-      - name: person_id
-        description: "A identifier for the customer_id, to join stg_person.businessentity_id"
-        tests:
-          - unique
-
   - name: stg_employee
     columns:
       - name: employee_id
@@ -109,28 +64,10 @@ models:
           - unique
           - not_null
 
-  - name: stg_person
-    columns:
-      - name: businessentity_id
-        description: "A identifier for the employee, to join stg_employee.businessentity_id || or || stg_customer.person_id"
-        tests:
-          - not_null
-          - unique
-
-  - name: stg_purchasing
-    columns:
-      - name: purchaseorder_id
-        tests:
-          - not_null
-
-
   - name: stg_product
     columns:
       - name: product_id
         description: "A identifier for the pkey, to join stg_salesorderdetails.product_id"
-        tests:
-          - not_null
-          - unique
 
   - name: stg_productvendor
     columns:
@@ -139,101 +76,33 @@ models:
         tests:
           - not_null
 
-  - name: stg_salesorderdetail
+  - name: stg_purchaseorderdetail
     columns:
-      - name: salesorder_id
-        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
-        tests:
-          - not_null
-
-      - name: product_id
-        description: "Primary key. Foreign key to stg_product.product_id"
-        tests:
-          - not_null
-
-  - name: stg_salesorderheader
-    columns:
-      - name: salesorder_id
-        description: "Primary key. Foreign key to stg_salesorderdetail.salesorder_id"
-        tests:
-          - not_null
-          - unique
-
-      - name: bill_address_id
-        description: "Primary key. Foreign key to stg_person.address_id"
-        tests:
-          - not_null
-
-      - name: ship_address_id
-        description: "Primary key. Foreign key to stg_person.address_id"
-        tests:
-          - not_null
-
-      - name: creditcard_id
-        description: "Primary key. Foreign key to stg_creditcard.creditcard_id"
-
-      - name: customer_id
-        description: "Primary key. Foreign key to stg_customer.customer.id"
-        tests:
-          - not_null
-
-  - name: stg_salesorderheadersalesreason
-    columns:
-      - name: salesorder_id
-        description: "Primary key. Foreign key to stg_salesorderheader.salesorder_id"
-        tests:
-          - not_null
-
-      - name: salesreason_id
-        description: "Primary key. Foreign key to stg_reason.salesorder_id"
-        tests:
-          - not_null
-
-  - name: stg_salesreason
-    columns:
-      - name: salesorder_id
-        description: "Foreign key to stg_salesorderheadersalesreason.salesorder_id"
-
-  - name: stg_stateprovince
-    columns:
-      - name: stateprovince_id
-        description: "Primary key. Foreign key to stg_adress.stateprovince_id"
-        tests:
-          - not_null
-          - unique
-
-      - name: country_id
-        description: "Primary key. Foreign key to stg_countryregion.country_id"
-        tests:
-          - not_null
-
-  - name: stg_store
-    columns:
-      - name: businessentity_id
+      - name: purchaseorderid
         description: "Primary key. Foreign key to stg_customer.store_id"
         tests:
           - not_null
-          - unique
 
-  - name: fact_products
+  - name: stg_purchaseorderheader
     columns:
-      - name: sk_product
-        description: "Surrogate key"
+      - name: purchaseorderid
+        description: "Primary key. Foreign key to stg_customer.store_id"
         tests:
           - not_null
-      - name: sk_order_sale
-        description: "Surrogate key"
-        tests:
-          - not_null
-      - name: sk_id_customer
-        description: "Surrogate key"
-        tests:
-          - not_null
-      - name: sk_ship_to_customer_id
-        description: "Surrogate key"
-        tests:
-          - not_null
-      - name: sk_address_of_customer_id
+
+  - name: stg_shipmethod
+    columns:
+      - name: businessentityid
+        description: "Primary key. Foreign key to stg_customer.store_id"
+
+  - name: stg_vendor
+    columns:
+      - name: shipmethodid
+        description: "Primary key. Foreign key to stg_customer.store_id"
+
+  - name: dim_header
+    columns:
+      - name: purchaseorderid
         description: "Surrogate key"
         tests:
           - not_null

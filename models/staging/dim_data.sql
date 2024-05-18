@@ -1,8 +1,8 @@
 with dim_data as (
     select
         generate_series(
-            (select min(order_date) from {{ ref('stg_salesorderheader') }}),
-            (select max(order_date) from {{ ref('stg_salesorderheader') }}),
+            (select min(duedate) from {{ ref('stg_purchaseorderdetail') }}),
+            (select max(duedate) from {{ ref('stg_purchaseorderdetail') }}),
             interval '1 day'
         )::date as date
 )

@@ -1,47 +1,6 @@
 version: 2
 
 snapshots:
-  - name: sp_address
-    description: "A snapshot of the stg_address model, to keep track of changes to that table"
-    columns:
-      - name: address_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-          - unique
-      - name: stateprovince_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-          
-  - name: sp_countryregion
-    description: "A snapshot of the stg_countryregion model, to keep track of changes to that table"
-    columns:
-      - name: country_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-      - name: country_name
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-
-  - name: sp_creditcard
-    description: "A snapshot of the stg_creditcard model, to keep track of changes to that table"
-    columns:
-      - name: creditcard_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - unique
-          - not_null
-
-  - name: sp_customer
-    description: "A snapshot of the stg_customer model, to keep track of changes to that table"
-    columns:
-      - name: customer_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-      - name: person_id
-        description:  "A surrogate key created by dbt. It is the primary key of this table"
-
   - name: sp_employee
     description: "A snapshot of the stg_employee model, to keep track of changes to that table"
     columns:
@@ -50,12 +9,6 @@ snapshots:
         tests:
           - unique
           - not_null
-
-  - name: sp_person
-    description: "A snapshot of the stg_person model, to keep track of changes to that table"
-    columns:
-      - name: businessentity_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
 
   - name: sp_product
     description: "A snapshot of the stg_product model, to keep track of changes to that table"
@@ -74,91 +27,12 @@ snapshots:
         tests:
           - not_null
 
-  - name: sp_salesorderdetail
-    description: "A snapshot of the stg_salesorderdetail model, to keep track of changes to that table"
-    columns:
-      - name: salesorder_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-      - name: product_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-  - name: sp_salesorderheader
-    description: "A snapshot of the stg_salesorderheader model, to keep track of changes to that table"
-    columns:
-      - name: salesorder_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-          - unique
-
-      - name: bill_address_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-      - name: ship_address_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-      - name: creditcard_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-
-      - name: customer_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-  - name: sp_salesorderheadersalesreason
-    description: "A snapshot of the stg_salesorderheadersalesreason model, to keep track of changes to that table"
-    columns:
-      - name: salesorder_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-          
-      - name: salesreason_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-  - name: sp_salesreason
-    columns:
-      - name: salesorder_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-
-  - name: sp_stateprovince
-    columns:
-      - name: stateprovince_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-          - unique
-
-      - name: country_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-  - name: sp_store
-    columns:
-      - name: businessentity_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-          - unique
-
-  - name: sp_purchasing
+  - name: sp_fact_pmanagement
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
     columns:
       - name: purchaseorder_id
         description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
-
 
           

@@ -1,16 +1,12 @@
--- Joining stg_employee and stg_person tables
-with dim_employee as (
-select
-    e.employee_id as employee_id,
-    p.businessentity_id as person_id,
-    concat(p.firstname, ' ', p.lastname) as full_name
-from {{ ref('stg_employee') }} as e
-left join {{ ref('stg_person') }} as p on e.employee_id = p.businessentity_id
+WITH dim_employee AS (
+    SELECT
+        employee_id,
+        first_name,
+        last_name
+    FROM {{ ref('stg_employee') }}
 )
-
 -- Final select statement
-select
+SELECT
     employee_id,
-    person_id,
-    full_name
-from dim_employee
+    CONCAT(first_name, ' ', last_name) AS full_name  
+FROM dim_employee
