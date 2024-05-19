@@ -96,7 +96,8 @@ models:
 
   - name: fact_pmanagement
     columns:
-      - name: sk_purchaseorder_id
+      - name: sk_product_id
         description: "Surrogate key"
         tests:
+          - unique
           - not_null

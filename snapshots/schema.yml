@@ -45,10 +45,11 @@ snapshots:
   - name: sp_fact_pmanagement
     description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
     columns:
-      - name: purchaseorder_id
+      - name: sk_product_id
         description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
+          - unique
 
   - name: sp_pperson
     description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"

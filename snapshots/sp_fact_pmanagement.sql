@@ -3,9 +3,9 @@
 {{
     config(
         target_schema='snapshots',
-        unique_key='purchaseorder_id',
+        unique_key='sk_product_id',
         strategy='timestamp',
-        updated_at='due_date'
+        updated_at='last_update'
     )
 }}
 
