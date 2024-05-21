@@ -5,9 +5,9 @@ WITH dim_header AS (
         SUM(orderqty) AS total_order_qty,
         SUM(receivedqty) AS total_qty_received,
         SUM(rejectedqty) AS total_qty_rejected,
-        SUM(orderqty * unitprice) AS total_order_value
+        SUM(receivedqty * unitprice) AS total_order_value
     FROM 
-        {{ ref('stg_purchaseorderdetail') }}
+        {{ ref('sp_purchaseorderdetail') }}
     GROUP BY 
         purchaseorderid, duedate
 )

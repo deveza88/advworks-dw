@@ -4,8 +4,8 @@
     config(
         target_schema='snapshots',
         unique_key='purchaseorderid',
-        strategy='timestamp',
-        updated_at='duedate'
+        strategy='check',
+        check_cols=['duedate','total_order_qty', 'total_order_value']
     )
 }}
 
