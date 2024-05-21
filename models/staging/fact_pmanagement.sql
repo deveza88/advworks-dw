@@ -1,11 +1,3 @@
--- dim tem de ir snapshoot
--- alterar configuracoes do snapshot
--- adicionar status
--- select he.purchaseorderid, productid, orderqty, unitprice, receivedqty, rejectedqty, orderdate,shipdate,subtotal,taxamt, freight
---    from purchasing.purchaseorderheader as he
---	join purchasing.purchaseorderdetail hd on he.purchaseorderid = hd.purchaseorderid
--- sp shipment
-
 with qty_products as (
     select *
     from {{ ref('dim_header') }}
@@ -21,14 +13,18 @@ surrogate_keys as (
         pu.shipdate,
         pr.productid,
         pr.name as name_product, 
-        shipdate - orderdate as days_to_shipping
-    from {{ ref('sp_purchaseorderheader') }} as pu
+        pu.shipdate - pu.orderdate as days_to_shipping
+    from {{ ref('dim_purchaseorderheader') }} as pu 
     left join {{ ref('dim_eemployee') }} as em on pu.employeeid = em.employee_id
+        and pu.orderdate between em.valid_from and em.valid_to
     left join {{ ref('dim_header') }} as he on pu.purchaseorderid = he.purchaseorderid
     left join {{ ref('dim_pproducts') }} as pd on pu.purchaseorderid = pd.purchaseorderid
+        and pu.orderdate between pd.valid_from and pd.valid_to
     left join {{ ref('sp_pproduct') }} as pr on pd.productid = pr.productid
     left join {{ ref('sp_shipmethod') }} as sp on pu.shipmethodid = sp.shipmethodid
-    left join {{ ref('dim_data') }} as dt on pu.modifieddate = dt.date
+    left join {{ ref('dim_data') }} as dt on pu.orderdate = dt.date
+    where pu.orderdate between pu.valid_from and pu.valid_to
+
 ),
 
 final as (
