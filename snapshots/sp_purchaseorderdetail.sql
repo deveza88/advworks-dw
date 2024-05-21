@@ -5,7 +5,7 @@
         target_schema='snapshots',
         unique_key='purchaseorderid',
         strategy='check',
-        check_cols=['unitprice','orderqty']
+        check_cols=['purchaseorderid']
     )
 }}
 

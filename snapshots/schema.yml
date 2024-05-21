@@ -10,7 +10,6 @@ snapshots:
       tests:
         - not_null
 
-
   - name: sp_eemployee
     description: "A snapshot of the stg_employee model, to keep track of changes to that table"
     columns:
@@ -20,36 +19,11 @@ snapshots:
           - unique
           - not_null
 
-  - name: sp_dim_header
-    description: "A snapshot of the stg_employee model, to keep track of changes to that table"
-    columns:
-      - name: purchaseorderid
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
   - name: sp_pproduct
     description: "A snapshot of the stg_product model, to keep track of changes to that table"
     columns:
       - name: purchaseorderid
         description: "A surrogate key created by dbt. It is the primary key of this table"
-
-  - name: sp_productvendor
-    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
-    columns:
-      - name: product_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-
-  - name: sp_fact_pmanagement
-    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
-    columns:
-      - name: sk_product_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null
-          - unique
 
   - name: sp_pperson
     description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
@@ -59,10 +33,34 @@ snapshots:
         tests:
           - not_null
 
-  - name: sp_dim_pproducts
+  - name: sp_purchaseorderdetail
     description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
     columns:
       - name: purchaseorderid
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null
+
+  - name: sp_shipmethod
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
+    columns:
+      - name: shipmethodid
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null
+
+  - name: sp_purchaseorderheader
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
+    columns:
+      - name: purchaseorderid
+        description: "A surrogate key created by dbt. It is the primary key of this table"
+        tests:
+          - not_null
+
+  - name: sp_fact_pmanagement
+    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
+    columns:
+      - name: sk_product_id
         description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null

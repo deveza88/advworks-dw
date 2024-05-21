@@ -22,10 +22,10 @@ surrogate_keys as (
         pr.productid,
         pr.name as name_product, 
         shipdate - orderdate as days_to_shipping
-    from {{ ref('stg_purchaseorderheader') }} as pu
+    from {{ ref('sp_purchaseorderheader') }} as pu
     left join {{ ref('dim_eemployee') }} as em on pu.employeeid = em.employee_id
     left join {{ ref('dim_header') }} as he on pu.purchaseorderid = he.purchaseorderid
-    left join {{ ref('sp_purchaseorderdetail') }} as pd on pu.purchaseorderid = pd.purchaseorderid
+    left join {{ ref('dim_pproducts') }} as pd on pu.purchaseorderid = pd.purchaseorderid
     left join {{ ref('sp_pproduct') }} as pr on pd.productid = pr.productid
     left join {{ ref('sp_shipmethod') }} as sp on pu.shipmethodid = sp.shipmethodid
     left join {{ ref('dim_data') }} as dt on pu.modifieddate = dt.date

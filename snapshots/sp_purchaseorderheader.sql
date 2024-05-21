@@ -1,16 +1,16 @@
-{% snapshot sp_dim_pproducts %}
+{% snapshot sp_purchaseorderheader %}
 
 {{
     config(
         target_schema='snapshots',
         unique_key='purchaseorderid',
         strategy='check',
-        check_cols=['name']
+        check_cols=['status','employeeid','vendorid','shipmethodid']
     )
 }}
 
 select
     *
-from {{ ref('dim_pproducts') }}
+from {{ ref('stg_purchaseorderheader') }}
 
 {% endsnapshot %}
