@@ -11,19 +11,18 @@ surrogate_keys as (
         pu.shipmethodid,
         pu.orderdate,
         pu.shipdate,
-        pr.productid,
-        pr.name as name_product, 
+        pd.productid,
+        pd.name as name_product, 
         pu.shipdate - pu.orderdate as days_to_shipping
     from {{ ref('dim_purchaseorderheader') }} as pu 
     left join {{ ref('dim_eemployee') }} as em on pu.employeeid = em.employee_id
-        and pu.orderdate between em.valid_from and em.valid_to
+        and pu.last_updated_at between em.valid_from and em.valid_to
     left join {{ ref('dim_header') }} as he on pu.purchaseorderid = he.purchaseorderid
     left join {{ ref('dim_pproducts') }} as pd on pu.purchaseorderid = pd.purchaseorderid
-        and pu.orderdate between pd.valid_from and pd.valid_to
-    left join {{ ref('sp_pproduct') }} as pr on pd.productid = pr.productid
+        and pu.last_updated_at between pd.valid_from and pd.valid_to
     left join {{ ref('sp_shipmethod') }} as sp on pu.shipmethodid = sp.shipmethodid
     left join {{ ref('dim_data') }} as dt on pu.orderdate = dt.date
-    where pu.orderdate between pu.valid_from and pu.valid_to
+    where pu.last_updated_at between pu.valid_from and pu.valid_to
 
 ),
 

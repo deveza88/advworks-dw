@@ -26,4 +26,4 @@ SELECT
     coalesce(dbt_valid_to, '2200-01-01') as valid_to,
     dbt_updated_at as last_updated_at
 FROM dim_products
-ORDER BY name ASC
+ORDER BY productid ASC
