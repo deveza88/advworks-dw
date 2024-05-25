@@ -13,6 +13,7 @@ surrogate_keys as (
         pu.shipdate,
         pd.productid,
         pd.name as name_product, 
+        pd.safetystocklevel as safetystocklevel,
         pu.shipdate - pu.orderdate as days_to_shipping
     from {{ ref('dim_purchaseorderheader') }} as pu 
     left join {{ ref('dim_eemployee') }} as em on pu.employeeid = em.employee_id
@@ -37,6 +38,7 @@ final as (
         surrogate_keys.shipdate as ship_date,
         surrogate_keys.name_product,  -- Corrected alias reference
         surrogate_keys.days_to_shipping,
+        surrogate_keys.safetystocklevel,
         qty_products.purchaseorderid as purchaseorder_id,
         qty_products.duedate as due_date,
         qty_products.duedate - surrogate_keys.shipdate AS days_to_due,
@@ -48,18 +50,26 @@ final as (
     inner join qty_products on surrogate_keys.purchaseorderid = qty_products.purchaseorderid
 )
 
-select
+SELECT
     sk_product_id,
     name_product,
-    count(distinct sk_purchaseorder_id) as total_orders,
-    avg(extract(day from days_to_shipping)) as avg_days_to_shipping,
-    max(date(ship_date)) as ship_date,
-    max(date(order_date)) as order_date,
-    sum(order_qty) as total_order_qty,
-    sum(qty_received) as total_qty_received,
-    sum(qty_rejected) as total_qty_rejected,
-    sum(order_value) as total_order_value
-
-from final
-group by sk_product_id, name_product
-order by sk_product_id asc
+    COUNT(DISTINCT sk_purchaseorder_id) AS total_orders,
+    AVG(EXTRACT(DAY FROM days_to_shipping)) AS avg_days_to_shipping,
+    MAX(DATE(ship_date)) AS max_ship_date,
+    MAX(DATE(order_date)) AS max_order_date,
+    SUM(order_qty) AS total_order_qty,
+    SUM(qty_received) AS total_qty_received,
+    MAX(safetystocklevel) AS max_safetystocklevel,
+    ((SUM(qty_received) / max(safetystocklevel))) * 100 AS percentage_margin,
+    SUM(qty_rejected) AS total_qty_rejected,
+    SUM(order_value) AS total_order_value,
+    CASE
+        WHEN ((SUM(qty_received) / MAX(safetystocklevel)) * 100) < 80 THEN 'Order More'
+        ELSE 'Do Not Order'
+    END AS order_decision
+FROM
+    final
+GROUP BY
+    sk_product_id, name_product
+ORDER BY
+    sk_product_id ASC

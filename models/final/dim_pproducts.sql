@@ -4,6 +4,7 @@ WITH dim_products AS (
         pu.purchaseorderid as purchaseorderid,
         pu.productid,
         pr.name,
+        pr.safetystocklevel,
         pu.dbt_valid_from as dbt_valid_from,
         pu.dbt_valid_to as dbt_valid_to,
         pu.dbt_updated_at as dbt_updated_at,
@@ -19,6 +20,7 @@ SELECT
     purchaseorderid,
     productid,
     name,
+    safetystocklevel,
     case
         when row_nr = 1 then '1970-01-01'
         else dbt_valid_from

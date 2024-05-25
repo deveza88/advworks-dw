@@ -27,4 +27,5 @@ SELECT
     productid,
     name
 FROM stg_purchaseorderdetail
+Order by productid
 
