@@ -3,9 +3,9 @@
 {{
     config(
         target_schema='snapshots',
-        unique_key='purchaseorderid',
+        unique_key='purchaseorder_id',
         strategy='check',
-        check_cols=['purchaseorderid','duedate','orderqty','unitprice','receivedqty','rejectedqty','modifieddate','name']
+        check_cols=['purchaseorder_id','duedate','orderqty','unitprice','receivedqty','rejectedqty','modifieddate','name']
     )
 }}
 

@@ -3,7 +3,7 @@
 {{
     config(
         target_schema='snapshots',
-        unique_key='shipmethodid',
+        unique_key='shipmethod_id',
         strategy='check',
         check_cols=['name']
     )

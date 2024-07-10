@@ -1,9 +1,9 @@
-SELECT purchaseorderid
+SELECT purchaseorderid as purchaseorder_id
     , revisionnumber
     , status
-    , employeeid
+    , employeeid as employee_id
     , vendorid
-    , shipmethodid
+    , shipmethodid as shipmethod_id
     , orderdate
     , shipdate
     , subtotal

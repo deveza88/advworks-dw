@@ -1,10 +1,10 @@
 WITH dim_purchaseorderheader AS (
 SELECT 
-    purchaseorderid,
+    purchaseorder_id,
     dbt_scd_id,
-    employeeid,
+    employee_id,
     vendorid,
-    shipmethodid,
+    shipmethod_id,
     orderdate,
     shipdate,
     subtotal,
@@ -13,16 +13,16 @@ SELECT
     dbt_valid_from,
     dbt_valid_to,
     dbt_updated_at,
-    row_number() over(partition by purchaseorderid order by dbt_valid_from) as row_nr
+    row_number() over(partition by purchaseorder_id order by dbt_valid_from) as row_nr
 from {{ ref("sp_purchaseorderheader") }}
 )
 
 select
     dbt_scd_id as sk_purchaseorderid,
-    purchaseorderid,
-    employeeid,
+    purchaseorder_id,
+    employee_id,
     vendorid,
-    shipmethodid,
+    shipmethod_id,
     orderdate,
     shipdate,
     shipdate - orderdate as days_to_shipping,

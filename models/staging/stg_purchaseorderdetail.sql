@@ -1,31 +1,31 @@
 WITH stg_purchaseorderdetail AS (
-    SELECT 
-        pu.purchaseorderid,
-        pu.purchaseorderdetailid,
+    SELECT
+        pu.purchaseorderid AS purchaseorder_id,
+        pu.purchaseorderdetailid AS purchaseorderdetail_id,
         pu.duedate,
         pu.orderqty,
-        pu.productid,
+        pu.productid AS product_id,
         pu.unitprice,
         pu.receivedqty,
         pu.rejectedqty,
         pu.modifieddate,
-        pr.productid as product_2,
+        pr.productid,
         pr.name
-    FROM {{ source("purchasing", "purchaseorderdetail") }} pu
-    LEFT JOIN {{ source("production", "product") }} pr 
-    ON pu.productid = pr.productid
+    FROM {{ source("purchasing", "purchaseorderdetail") }} AS pu
+    LEFT JOIN {{ source("production", "product") }} AS pr
+        ON pu.productid = pr.productid
 )
-SELECT 
-    purchaseorderid,
-    purchaseorderdetailid,
+
+SELECT
+    purchaseorder_id,
+    purchaseorderdetail_id,
+    product_id,
     duedate,
     orderqty,
     unitprice,
     receivedqty,
     rejectedqty,
     modifieddate,
-    productid,
     name
 FROM stg_purchaseorderdetail
-Order by productid
-
+ORDER BY product_id

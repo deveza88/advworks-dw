@@ -1,4 +1,4 @@
-SELECT shipmethodid
+SELECT shipmethodid as shipmethod_id
     , name
     , shipbase
     , shiprate

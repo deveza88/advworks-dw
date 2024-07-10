@@ -1,6 +1,6 @@
 with source_data as (
     select
-        productid
+        productid as product_id
         , name
         , safetystocklevel
         , finishedgoodsflag

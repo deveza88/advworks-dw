@@ -1,6 +1,6 @@
 WITH dim_header AS (
     SELECT 
-        purchaseorderid,
+        purchaseorder_id,
         duedate,
         SUM(orderqty) AS total_order_qty,
         SUM(receivedqty) AS total_qty_received,
@@ -9,8 +9,8 @@ WITH dim_header AS (
     FROM 
         {{ ref('sp_purchaseorderdetail') }}
     GROUP BY 
-        purchaseorderid, duedate
+        purchaseorder_id, duedate
 )
 SELECT *
 FROM dim_header
-ORDER BY purchaseorderid
+ORDER BY purchaseorder_id

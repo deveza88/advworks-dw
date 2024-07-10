@@ -33,66 +33,38 @@ models:
     columns:
       - name: product_id
         description: "A identifier for the pkey, to join stg_salesorderdetails.product_id"
+        tests:
+          - unique
+          - not_null
 
   - name: stg_productvendor
     columns:
       - name: product_id
         description: "Primary key. Foreign key to stg_product.product_id"
         tests:
+          - unique
           - not_null
 
   - name: stg_purchaseorderdetail
     columns:
-      - name: purchaseorderid
+      - name: purchaseorderdetail_id
         description: "Primary key. Foreign key to stg_customer.store_id"
         tests:
+          - unique
           - not_null
 
   - name: stg_purchaseorderheader
     columns:
-      - name: purchaseorderid
+      - name: purchaseorder_id
         description: "Primary key. Foreign key to stg_customer.store_id"
         tests:
+          - unique
           - not_null
 
   - name: stg_shipmethod
     columns:
-      - name: businessentityid
+      - name: shipmethod_id
         description: "Primary key. Foreign key to stg_customer.store_id"
-
-  - name: dim_header
-    columns:
-      - name: purchaseorderid
-        description: "Surrogate key"
         tests:
-          - not_null
-
-  - name: dim_data
-    columns:
-      - name: date
-        description: "Surrogate key"
-        tests:
-          - not_null
-
-  - name: dim_eemployee
-    columns:
-      - name: employee_id
-        description: "Surrogate key"
-        tests:
-          - not_null
-
-
-  - name: fact_pmanagement
-    columns:
-      - name: sk_product_id
-        description: "Surrogate key"
-        tests:
-          - not_null
-
-
-  - name: dim_pproducts
-    columns:
-      - name: sk_purchaseorderid
-        description: "Surrogate key"
-        tests:
+          - unique
           - not_null
