@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: dim_header
+    description: >
+      Allows calculation of data regarding the products for their management
+    columns:
+      - name: purchaseorder_id
+        description: "As unique identifier for the employee"
+        tests:
+          - not_null
+      - name: total_order_qty
+        description: "A unique identifier for the employee"
+      - name: total_qty_received
+        description: "Total quantity received of the product"
+      - name: total_qty_rejected
+        description: "Total quantity rejected of the product"
+      - name: total_order_value
+        description: "Total value from order received of the product"
+
+

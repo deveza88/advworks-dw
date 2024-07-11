@@ -18,10 +18,10 @@ from {{ ref("sp_purchaseorderheader") }}
 )
 
 select
-    dbt_scd_id as sk_purchaseorderid,
+    dbt_scd_id as sk_purchaseorder_id,
     purchaseorder_id,
     employee_id,
-    vendorid,
+    vendorid as vendor_id,
     shipmethod_id,
     orderdate,
     shipdate,

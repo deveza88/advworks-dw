@@ -1,75 +1,75 @@
-with qty_products as (
-    select *
-    from {{ ref('dim_header') }}
-),
-
-surrogate_keys as (
-    select
-        pu.purchaseorderid,
-        pu.employeeid,
-        pu.vendorid,
-        pu.shipmethodid,
+WITH dimension_ids AS (
+    SELECT
+        pu.sk_purchaseorder_id,
+        pu.vendor_id,
+        pu.shipmethod_id,
         pu.orderdate,
         pu.shipdate,
-        pd.productid,
-        pd.name as name_product, 
-        pd.safetystocklevel as safetystocklevel,
-        pu.shipdate - pu.orderdate as days_to_shipping
-    from {{ ref('dim_purchaseorderheader') }} as pu 
-    left join {{ ref('dim_eemployee') }} as em on pu.employeeid = em.employee_id
-        and pu.orderdate between em.valid_from and em.valid_to
-    left join {{ ref('dim_header') }} as he on pu.purchaseorderid = he.purchaseorderid
-    left join {{ ref('dim_pproducts') }} as pd on pu.purchaseorderid = pd.purchaseorderid
-        and pu.orderdate between pd.valid_from and pd.valid_to
-    left join {{ ref('sp_shipmethod') }} as sp on pu.shipmethodid = sp.shipmethodid
-    left join {{ ref('dim_data') }} as dt on pu.orderdate = dt.date
-    where pu.orderdate between pu.valid_from and pu.valid_to
+        em.sk_employee_id,
+        pd.sk_products_id,
+        pd.name AS name_product, 
+        pd.safetystocklevel AS safetystocklevel,
+        pu.shipdate - pu.orderdate AS days_to_shipping,
+        he.purchaseorder_id AS purchaseorder_id,
+        he.duedate AS due_date,
+        he.duedate - pu.shipdate AS days_to_due,
+        he.total_order_qty AS order_qty,
+        he.total_qty_received AS qty_received,
+        he.total_qty_rejected AS qty_rejected,
+        he.total_order_value AS order_value
+    FROM {{ ref('dim_purchaseorderheader') }} pu 
+    LEFT JOIN {{ ref('dim_eemployee') }} em ON pu.employee_id = em.employee_id
+        AND pu.orderdate BETWEEN em.valid_from AND em.valid_to
+    LEFT JOIN {{ ref('dim_header') }} he ON pu.purchaseorder_id = he.purchaseorder_id
+    LEFT JOIN {{ ref('dim_pproducts') }} pd ON pu.purchaseorder_id = pd.purchaseorder_id
+        AND pu.orderdate BETWEEN pd.valid_from AND pd.valid_to
+    LEFT JOIN {{ ref('sp_shipmethod') }} sp ON pu.shipmethod_id = sp.shipmethod_id
+    LEFT JOIN {{ ref('dim_date') }} dt ON pu.orderdate = dt.date
+    WHERE pu.orderdate BETWEEN pu.valid_from AND pu.valid_to
 
 ),
 
-final as (
-    select
-        surrogate_keys.purchaseorderid as sk_purchaseorder_id,
-        surrogate_keys.productid as sk_product_id,
-        surrogate_keys.employeeid as sk_employeeid_id,
-        surrogate_keys.vendorid as sk_vendorid_id,
-        surrogate_keys.shipmethodid as shipmethod_id,
-        surrogate_keys.orderdate as order_date,
-        surrogate_keys.shipdate as ship_date,
-        surrogate_keys.name_product,  -- Corrected alias reference
-        surrogate_keys.days_to_shipping,
-        surrogate_keys.safetystocklevel,
-        qty_products.purchaseorderid as purchaseorder_id,
-        qty_products.duedate as due_date,
-        qty_products.duedate - surrogate_keys.shipdate AS days_to_due,
-        qty_products.total_order_qty as order_qty,
-        qty_products.total_qty_received as qty_received,
-        qty_products.total_qty_rejected as qty_rejected,
-        qty_products.total_order_value as order_value
-    from surrogate_keys
-    inner join qty_products on surrogate_keys.purchaseorderid = qty_products.purchaseorderid
+surrogate_keys AS (
+    SELECT
+        dids.sk_purchaseorder_id AS sk_purchaseorder_id,
+        dids.sk_products_id AS sk_products_id,
+        dids.sk_employee_id AS sk_employee_id,
+        dids.shipmethod_id AS shipmethod_id,
+        dids.vendor_id AS vendor_id,
+        dids.orderdate AS order_date,
+        dids.shipdate AS ship_date,
+        dids.name_product,
+        dids.days_to_shipping,
+        dids.safetystocklevel,
+        dids.purchaseorder_id,
+        dids.due_date,
+        dids.days_to_due,
+        dids.order_qty,
+        dids.qty_received,
+        dids.qty_rejected,
+        dids.order_value
+    FROM dimension_ids dids
+),
+
+final_cte AS ( 
+    SELECT
+        sk_purchaseorder_id,
+        sk_products_id,
+        sk_employee_id,
+        shipmethod_id,
+        order_date,
+        ship_date,
+        name_product,
+        days_to_shipping,
+        safetystocklevel,
+        due_date,
+        days_to_due,
+        order_qty,
+        qty_received,
+        qty_rejected,
+        order_value
+    FROM surrogate_keys
 )
 
-SELECT
-    sk_product_id,
-    name_product,
-    COUNT(DISTINCT sk_purchaseorder_id) AS total_orders,
-    AVG(EXTRACT(DAY FROM days_to_shipping)) AS avg_days_to_shipping,
-    MAX(DATE(ship_date)) AS max_ship_date,
-    MAX(DATE(order_date)) AS max_order_date,
-    SUM(order_qty) AS total_order_qty,
-    SUM(qty_received) AS total_qty_received,
-    MAX(safetystocklevel) AS max_safetystocklevel,
-    ((SUM(qty_received) / max(safetystocklevel))) * 100 AS percentage_margin,
-    SUM(qty_rejected) AS total_qty_rejected,
-    SUM(order_value) AS total_order_value,
-    CASE
-        WHEN ((SUM(qty_received) / MAX(safetystocklevel)) * 100) < 80 THEN 'Order More'
-        ELSE 'Do Not Order'
-    END AS order_decision
-FROM
-    final
-GROUP BY
-    sk_product_id, name_product
-ORDER BY
-    sk_product_id ASC
+SELECT *
+FROM final_cte

@@ -24,6 +24,7 @@ snapshots:
         description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
+          - unique
 
   - name: sp_purchaseorderdetail
     description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
@@ -40,6 +41,7 @@ snapshots:
         description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
+          - unique
 
   - name: sp_purchaseorderheader
     description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
@@ -48,11 +50,5 @@ snapshots:
         description: "A surrogate key created by dbt. It is the primary key of this table"
         tests:
           - not_null
+          - unique
 
-  - name: sp_fact_pmanagement
-    description: "A snapshot of the stg_productvendor model, to keep track of changes to that table"
-    columns:
-      - name: sk_product_id
-        description: "A surrogate key created by dbt. It is the primary key of this table"
-        tests:
-          - not_null

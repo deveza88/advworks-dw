@@ -16,7 +16,7 @@ WITH dim_products AS (
 )
 
 SELECT 
-    dbt_scd_id as sk_purchaseorderid,
+    dbt_scd_id as sk_products_id,
     purchaseorder_id,
     product_id,
     name,
